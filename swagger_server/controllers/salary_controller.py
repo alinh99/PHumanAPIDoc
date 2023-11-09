@@ -84,7 +84,7 @@ def productivity_sum_salary_employee_id_calculation_get(employee_id):  # noqa: E
 
 
 def productivity_sum_salary_employee_id_list_get(employee_id):  # noqa: E501
-    """Calculate productivity
+    """Get Sum Salary by productivity
 
      # noqa: E501
 
