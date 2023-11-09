@@ -1,0 +1,553 @@
+openapi: 3.0.0
+info:
+  title: PHuman API
+  description: "Optional multiline or single-line description in [CommonMark](http://commonmark.org/help/)\
+    \ or HTML."
+  version: 0.1.9
+servers:
+- url: http://124.158.10.164:31225/api/v1/
+  description: API Testing server
+tags:
+- name: leave
+- name: contact
+- name: contract
+- name: payroll
+- name: salary
+- name: attandance
+paths:
+  /leave/{employeeId}/list:
+    get:
+      tags:
+      - leave
+      summary: Returns an employee's list of leave applications.
+      operationId: leave_employee_id_list_get
+      parameters:
+      - name: employeeId
+        in: path
+        description: Parameter description in CommonMark or HTML.
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: integer
+          format: int64
+          default: 1
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/inline_response_200'
+        "500":
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/inline_response_500'
+      x-openapi-router-controller: swagger_server.controllers.leave_controller
+  /leave/time/list:
+    get:
+      tags:
+      - leave
+      summary: Get Time List
+      operationId: leave_time_list_get
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              example:
+                message: Time list runs successfully
+                success: true
+                result:
+                - id: 253
+                  name: Morning
+                  value: morning
+                  sequence: 0
+                - id: 254
+                  name: Afternoon
+                  value: afternoon
+                  sequence: 1
+        "500":
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/inline_response_500_1'
+      x-openapi-router-controller: swagger_server.controllers.leave_controller
+  /leave-type/list:
+    get:
+      tags:
+      - leave
+      summary: Get Leave Type List
+      operationId: leave_type_list_get
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              example:
+                message: Leave type list run successfully
+                success: true
+                result:
+                - name: Paid Time Off
+                  id: 1
+                - name: Sick Time Off
+                  id: 2
+                - name: Unpaid
+                  id: 4
+                - name: Compensatory Days
+                  id: 3
+        "500":
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/inline_response_500_1'
+      x-openapi-router-controller: swagger_server.controllers.leave_controller
+  /leave/state/list:
+    get:
+      tags:
+      - leave
+      summary: Get Leave State List
+      operationId: leave_state_list_get
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              example:
+                leave_record:
+                - id: 521
+                  name: New
+                  value: draft
+                  sequence: 0
+                - id: 522
+                  name: Waiting Approval
+                  value: confirm
+                  sequence: 1
+                - id: 523
+                  name: Refused
+                  value: refuse
+                  sequence: 2
+                - id: 525
+                  name: Approved
+                  value: validate
+                  sequence: 4
+                - id: 526
+                  name: Cancelled
+                  value: cancel
+                  sequence: 5
+                message: Leave state list runs successfully
+                success: true
+        "500":
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/inline_response_500_1'
+      x-openapi-router-controller: swagger_server.controllers.leave_controller
+  /remaining-leave/{employeeId}/list:
+    get:
+      tags:
+      - leave
+      summary: Get Remaining Leaves
+      operationId: remaining_leave_employee_id_list_get
+      parameters:
+      - name: employeeId
+        in: path
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: integer
+          format: int64
+          default: 1
+      - name: id
+        in: query
+        required: true
+        style: form
+        explode: true
+        schema:
+          type: integer
+          format: int64
+          default: 1
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              example:
+                result:
+                  max_leave: 12
+                  used_leave: 2
+                  remaining_leave: 10
+                message: This is your remaining leaves
+                success: true
+        "500":
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/inline_response_500_1'
+      x-openapi-router-controller: swagger_server.controllers.leave_controller
+  /payroll/{employeeId}list:
+    get:
+      tags:
+      - payroll
+      summary: Get Payroll List
+      operationId: payroll_employee_idlist_get
+      parameters:
+      - name: employeeId
+        in: path
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: integer
+          format: int64
+          default: 1
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              example:
+                result:
+                - name: Salary Slip of Nguyen Hoang Linh for October-2023
+                  date_start: 2023-10-01
+                  employee_id: Nguyen Hoang Linh
+                  contract_id: Full-time
+                  date_stop: 2023-10-31
+                  struct_id: Base for new structures
+                  credit_note: ""
+                  state: done
+                  note: ""
+                  number: SLIP/001
+                  company_id: My Company
+                  payslip_count: 3
+                salary:
+                - id: 11
+                  total: 999999999
+                avatar:
+                - id: 1
+                  avatar_128: images.jpg
+                message: Payroll List runs successfully
+                success: true
+        "500":
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/inline_response_500_1'
+      x-openapi-router-controller: swagger_server.controllers.payroll_controller
+  /payroll-detail/{employeeId}/list:
+    get:
+      tags:
+      - payroll
+      summary: Get Payroll List Details
+      operationId: payroll_detail_employee_id_list_get
+      parameters:
+      - name: employeeId
+        in: path
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: integer
+          format: int64
+          default: 1
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              example:
+                result:
+                - name: Basic Salary
+                  code: BASIC
+                  quantity: 1
+                  company_id: My Company
+                  contract_id: Full-time
+                  note: false
+                  amount: 999999999
+                  total: 999999999
+                  slip_id: Salary Slip of Nguyen Hoang Linh for October-2023
+                  salary_rule_id: Basic Salary
+                - name: Gross
+                  code: GROSS
+                  quantity: 1
+                  company_id: My Company
+                  contract_id: Full-time
+                  note: false
+                  amount: 999999999
+                  total: 999999999
+                  slip_id: Salary Slip of Nguyen Hoang Linh for October-2023
+                  salary_rule_id: Gross
+                - name: Net Salary
+                  code: NET
+                  quantity: 1
+                  company_id: My Company
+                  contract_id: Full-time
+                  note: false
+                  amount: 999999999
+                  total: 999999999
+                  slip_id: Salary Slip of Nguyen Hoang Linh for October-2023
+                  salary_rule_id: Net Salary
+                message: Payroll List Details runs successfully
+                success: true
+        "500":
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/inline_response_500_1'
+      x-openapi-router-controller: swagger_server.controllers.payroll_controller
+  /hour/detail-salary/{employeeId}/calculation:
+    get:
+      tags:
+      - salary
+      summary: Calculate Detail Salary Based on Hours
+      operationId: hour_detail_salary_employee_id_calculation_get
+      parameters:
+      - name: employeeId
+        in: path
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: integer
+          format: int64
+          default: 1
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              example:
+                success: true
+                message: Your salary based on hours has been calculated successfully
+        "500":
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/inline_response_500_1'
+      x-openapi-router-controller: swagger_server.controllers.salary_controller
+  /hour/all-salary/{employeeId}/calculation:
+    get:
+      tags:
+      - salary
+      summary: Calculate Sum of Salary Based on Hours
+      operationId: hour_all_salary_employee_id_calculation_get
+      parameters:
+      - name: employeeId
+        in: path
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: integer
+          format: int64
+          default: 1
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              example:
+                success: true
+                message: Your total hour salary has been calculated successfully
+        "500":
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/inline_response_500_1'
+      x-openapi-router-controller: swagger_server.controllers.salary_controller
+  /hour/all-salary/{employeeId}/list:
+    get:
+      tags:
+      - salary
+      summary: Get Hour Salaries
+      operationId: hour_all_salary_employee_id_list_get
+      parameters:
+      - name: employeeId
+        in: path
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: integer
+          format: int64
+          default: 1
+      responses:
+        "200":
+          description: Your hour salaries run successfully
+          content:
+            application/json:
+              example:
+                result:
+                - id: 3
+                  worked_hours: 0.004166666666666667
+                  x_total_salary: "41.666666666667"
+                - id: 2
+                  worked_hours: 0.013055555555555556
+                  x_total_salary: "130.55555555556"
+                success: true
+                message: Your total hour salary runs successfully
+        "500":
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/inline_response_500_1'
+      x-openapi-router-controller: swagger_server.controllers.salary_controller
+  /hour/detail-salary/{employeeId}/list:
+    get:
+      tags:
+      - salary
+      summary: Get Hour Salaries
+      operationId: hour_detail_salary_employee_id_list_get
+      parameters:
+      - name: employeeId
+        in: path
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: integer
+          format: int64
+          default: 1
+      responses:
+        "200":
+          description: Your hour salaries run successfully
+          content:
+            application/json:
+              example:
+                result:
+                - id: 3
+                  worked_hours: 0.004166666666666667
+                  x_salary: 41.666666666667
+                  check_in: 2023-11-08 20:41:23
+                  check_out: 2023-11-08 20:42:05
+                - id: 2
+                  worked_hours: 0.013055555555555556
+                  x_salary: 130.55555555556
+                  check_in: 2023-11-08 20:41:23
+                  check_out: 2023-11-08 20:42:05
+                success: true
+                message: Your total hour salary runs successfully
+        "500":
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/inline_response_500_1'
+      x-openapi-router-controller: swagger_server.controllers.salary_controller
+components:
+  schemas:
+    inline_response_200:
+      type: object
+      properties:
+        result:
+          type: array
+          properties:
+            messages:
+              type: string
+            success:
+              type: boolean
+              default: true
+          items:
+            type: object
+            properties:
+              id:
+                type: integer
+                format: int64
+                default: 1
+              holiday_type:
+                type: string
+                default: employee
+              request_date_from:
+                type: string
+              request_date_to:
+                type: string
+              number_of_days:
+                type: integer
+              note:
+                type: string
+                description: Note
+              employee_id:
+                type: integer
+                default: 1
+              state:
+                type: string
+                default: confirm
+              request_date_from_period:
+                type: string
+                default: am
+              holiday_status_id:
+                type: integer
+                format: int64
+                default: 1
+            example:
+              request_date_to: request_date_to
+              note: note
+              number_of_days: 6
+              request_date_from: request_date_from
+              employee_id: 1
+              id: 0
+              state: confirm
+              request_date_from_period: am
+              holiday_status_id: 5
+              holiday_type: employee
+        message:
+          type: string
+          default: Your leave applications run successfully
+        success:
+          type: boolean
+          default: true
+      example:
+        result:
+        - request_date_to: request_date_to
+          note: note
+          number_of_days: 6
+          request_date_from: request_date_from
+          employee_id: 1
+          id: 0
+          state: confirm
+          request_date_from_period: am
+          holiday_status_id: 5
+          holiday_type: employee
+        - request_date_to: request_date_to
+          note: note
+          number_of_days: 6
+          request_date_from: request_date_from
+          employee_id: 1
+          id: 0
+          state: confirm
+          request_date_from_period: am
+          holiday_status_id: 5
+          holiday_type: employee
+        success: true
+        message: Your leave applications run successfully
+    inline_response_500:
+      type: object
+      properties:
+        message:
+          type: string
+          default: Internal Server Error Message
+        success:
+          type: boolean
+          default: true
+    inline_response_500_1:
+      type: object
+      properties:
+        message:
+          type: string
+          default: Internal Server Error Message
+        success:
+          type: boolean
+          default: false
+
