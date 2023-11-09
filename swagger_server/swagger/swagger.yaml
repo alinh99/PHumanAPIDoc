@@ -544,7 +544,7 @@ paths:
     get:
       tags:
       - salary
-      summary: Calculate productivity
+      summary: Sum Salary by productivity
       operationId: productivity_sum_salary_employee_id_list_get
       parameters:
       - name: employeeId
