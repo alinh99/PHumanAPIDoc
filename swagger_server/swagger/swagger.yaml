@@ -192,6 +192,41 @@ paths:
               schema:
                 $ref: '#/components/schemas/inline_response_500_1'
       x-openapi-router-controller: swagger_server.controllers.leave_controller
+  /employee/{employeeId}/list:
+    get:
+      tags:
+      - contact
+      summary: Get Remaining Leaves
+      operationId: employee_employee_id_list_get
+      parameters:
+      - name: employeeId
+        in: path
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: integer
+          format: int64
+          default: 1
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              example:
+                result:
+                  max_leave: 12
+                  used_leave: 2
+                  remaining_leave: 10
+                message: This is your remaining leaves
+                success: true
+        "500":
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/inline_response_500_1'
+      x-openapi-router-controller: swagger_server.controllers.contact_controller
   /payroll/{employeeId}list:
     get:
       tags:
@@ -370,7 +405,7 @@ paths:
     get:
       tags:
       - salary
-      summary: Get Hour Salaries
+      summary: Get Total Hour Salary
       operationId: hour_all_salary_employee_id_list_get
       parameters:
       - name: employeeId
@@ -384,17 +419,14 @@ paths:
           default: 1
       responses:
         "200":
-          description: Your hour salaries run successfully
+          description: OK
           content:
             application/json:
               example:
                 result:
-                - id: 3
+                - id: 1
                   worked_hours: 0.004166666666666667
                   x_total_salary: "41.666666666667"
-                - id: 2
-                  worked_hours: 0.013055555555555556
-                  x_total_salary: "130.55555555556"
                 success: true
                 message: Your total hour salary runs successfully
         "500":
@@ -408,7 +440,7 @@ paths:
     get:
       tags:
       - salary
-      summary: Get Hour Salaries
+      summary: Get Detail Hour Salary
       operationId: hour_detail_salary_employee_id_list_get
       parameters:
       - name: employeeId
@@ -422,7 +454,7 @@ paths:
           default: 1
       responses:
         "200":
-          description: Your hour salaries run successfully
+          description: OK
           content:
             application/json:
               example:
@@ -446,6 +478,153 @@ paths:
               schema:
                 $ref: '#/components/schemas/inline_response_500_1'
       x-openapi-router-controller: swagger_server.controllers.salary_controller
+  /productivity/sum-salary/{employeeId}/calculation:
+    get:
+      tags:
+      - salary
+      summary: Calculate Salary by productivity
+      operationId: productivity_sum_salary_employee_id_calculation_get
+      parameters:
+      - name: employeeId
+        in: path
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: integer
+          format: int64
+          default: 1
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              example:
+                success: true
+                message: Your total hour salary runs successfully
+        "500":
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/inline_response_500_1'
+      x-openapi-router-controller: swagger_server.controllers.salary_controller
+  /productivity/sum/{employeeId}/calculation:
+    get:
+      tags:
+      - salary
+      summary: Calculate productivity
+      operationId: productivity_sum_employee_id_calculation_get
+      parameters:
+      - name: employeeId
+        in: path
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: integer
+          format: int64
+          default: 1
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              example:
+                success: true
+                message: Your total productivity runs successfully
+        "500":
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/inline_response_500_1'
+      x-openapi-router-controller: swagger_server.controllers.salary_controller
+  /productivity/sum-salary/{employeeId}/list:
+    get:
+      tags:
+      - salary
+      summary: Calculate productivity
+      operationId: productivity_sum_salary_employee_id_list_get
+      parameters:
+      - name: employeeId
+        in: path
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: integer
+          format: int64
+          default: 1
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              example:
+                result:
+                - id: 1
+                  x_total_salary: 2000040
+                  x_total_projects: 2
+                  price_unit: 40
+                - id: 2
+                  x_total_salary: 2000040
+                  x_total_projects: 2
+                  price_unit: 2000000
+                success: true
+                message: Your sum of productivity salary runs successfully
+        "500":
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/inline_response_500_1'
+      x-openapi-router-controller: swagger_server.controllers.salary_controller
+  /productivity/detail-salary/{employeeId}/list:
+    get:
+      tags:
+      - leave
+      summary: Get Remaining Leaves
+      operationId: productivity_detail_salary_employee_id_list_get
+      parameters:
+      - name: employeeId
+        in: path
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: integer
+          format: int64
+          default: 1
+      - name: id
+        in: query
+        required: true
+        style: form
+        explode: true
+        schema:
+          type: integer
+          format: int64
+          default: 1
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              example:
+                result:
+                - id: 1
+                  x_total_salary: 2000040
+                  x_total_projects: 2
+                  price_unit: 40
+                success: true
+                message: Your detail of productivity salary runs successfully
+        "500":
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/inline_response_500_1'
+      x-openapi-router-controller: swagger_server.controllers.leave_controller
 components:
   schemas:
     inline_response_200:

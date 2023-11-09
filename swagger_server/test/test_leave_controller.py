@@ -58,6 +58,19 @@ class TestLeaveController(BaseTestCase):
         self.assert200(response,
                        'Response body is : ' + response.data.decode('utf-8'))
 
+    def test_productivity_detail_salary_employee_id_list_get(self):
+        """Test case for productivity_detail_salary_employee_id_list_get
+
+        Get Remaining Leaves
+        """
+        query_string = [('id', 1)]
+        response = self.client.open(
+            '/api/v1//productivity/detail-salary/{employeeId}/list'.format(employee_id=789),
+            method='GET',
+            query_string=query_string)
+        self.assert200(response,
+                       'Response body is : ' + response.data.decode('utf-8'))
+
     def test_remaining_leave_employee_id_list_get(self):
         """Test case for remaining_leave_employee_id_list_get
 

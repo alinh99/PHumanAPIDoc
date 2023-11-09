@@ -53,6 +53,21 @@ def leave_type_list_get():  # noqa: E501
     return 'do some magic!'
 
 
+def productivity_detail_salary_employee_id_list_get(employee_id, id):  # noqa: E501
+    """Get Remaining Leaves
+
+     # noqa: E501
+
+    :param employee_id: 
+    :type employee_id: int
+    :param id: 
+    :type id: int
+
+    :rtype: None
+    """
+    return 'do some magic!'
+
+
 def remaining_leave_employee_id_list_get(employee_id, id):  # noqa: E501
     """Get Remaining Leaves
 

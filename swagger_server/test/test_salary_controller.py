@@ -26,7 +26,7 @@ class TestSalaryController(BaseTestCase):
     def test_hour_all_salary_employee_id_list_get(self):
         """Test case for hour_all_salary_employee_id_list_get
 
-        Get Hour Salaries
+        Get Total Hour Salary
         """
         response = self.client.open(
             '/api/v1//hour/all-salary/{employeeId}/list'.format(employee_id=789),
@@ -48,10 +48,43 @@ class TestSalaryController(BaseTestCase):
     def test_hour_detail_salary_employee_id_list_get(self):
         """Test case for hour_detail_salary_employee_id_list_get
 
-        Get Hour Salaries
+        Get Detail Hour Salary
         """
         response = self.client.open(
             '/api/v1//hour/detail-salary/{employeeId}/list'.format(employee_id=789),
+            method='GET')
+        self.assert200(response,
+                       'Response body is : ' + response.data.decode('utf-8'))
+
+    def test_productivity_sum_employee_id_calculation_get(self):
+        """Test case for productivity_sum_employee_id_calculation_get
+
+        Calculate productivity
+        """
+        response = self.client.open(
+            '/api/v1//productivity/sum/{employeeId}/calculation'.format(employee_id=789),
+            method='GET')
+        self.assert200(response,
+                       'Response body is : ' + response.data.decode('utf-8'))
+
+    def test_productivity_sum_salary_employee_id_calculation_get(self):
+        """Test case for productivity_sum_salary_employee_id_calculation_get
+
+        Calculate Salary by productivity
+        """
+        response = self.client.open(
+            '/api/v1//productivity/sum-salary/{employeeId}/calculation'.format(employee_id=789),
+            method='GET')
+        self.assert200(response,
+                       'Response body is : ' + response.data.decode('utf-8'))
+
+    def test_productivity_sum_salary_employee_id_list_get(self):
+        """Test case for productivity_sum_salary_employee_id_list_get
+
+        Calculate productivity
+        """
+        response = self.client.open(
+            '/api/v1//productivity/sum-salary/{employeeId}/list'.format(employee_id=789),
             method='GET')
         self.assert200(response,
                        'Response body is : ' + response.data.decode('utf-8'))
