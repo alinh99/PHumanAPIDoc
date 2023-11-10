@@ -1,6 +1,7 @@
 import connexion
 import six
 
+from swagger_server.models.inline_response4001 import InlineResponse4001  # noqa: E501
 from swagger_server.models.inline_response5001 import InlineResponse5001  # noqa: E501
 from swagger_server import util
 
@@ -44,13 +45,15 @@ def hour_detail_salary_employee_id_calculation_get(employee_id):  # noqa: E501
     return 'do some magic!'
 
 
-def hour_detail_salary_employee_id_list_get(employee_id):  # noqa: E501
+def hour_detail_salary_employee_id_list_get(employee_id, id):  # noqa: E501
     """Get Detail Hour Salary
 
      # noqa: E501
 
     :param employee_id: 
     :type employee_id: int
+    :param id: 
+    :type id: int
 
     :rtype: None
     """
@@ -84,7 +87,7 @@ def productivity_sum_salary_employee_id_calculation_get(employee_id):  # noqa: E
 
 
 def productivity_sum_salary_employee_id_list_get(employee_id):  # noqa: E501
-    """Calculate productivity
+    """Get Sum Salary based on Productivity
 
      # noqa: E501
 

@@ -5,6 +5,7 @@ from __future__ import absolute_import
 from flask import json
 from six import BytesIO
 
+from swagger_server.models.inline_response4001 import InlineResponse4001  # noqa: E501
 from swagger_server.models.inline_response5001 import InlineResponse5001  # noqa: E501
 from swagger_server.test import BaseTestCase
 
@@ -50,9 +51,11 @@ class TestSalaryController(BaseTestCase):
 
         Get Detail Hour Salary
         """
+        query_string = [('id', 28)]
         response = self.client.open(
             '/api/v1//hour/detail-salary/{employeeId}/list'.format(employee_id=789),
-            method='GET')
+            method='GET',
+            query_string=query_string)
         self.assert200(response,
                        'Response body is : ' + response.data.decode('utf-8'))
 
@@ -81,7 +84,7 @@ class TestSalaryController(BaseTestCase):
     def test_productivity_sum_salary_employee_id_list_get(self):
         """Test case for productivity_sum_salary_employee_id_list_get
 
-        Calculate productivity
+        Get Sum Salary based on Productivity
         """
         response = self.client.open(
             '/api/v1//productivity/sum-salary/{employeeId}/list'.format(employee_id=789),

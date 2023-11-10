@@ -13,7 +13,7 @@ tags:
 - name: contract
 - name: payroll
 - name: salary
-- name: attandance
+- name: attendance
 paths:
   /leave/{employeeId}/list:
     get:
@@ -45,6 +45,226 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/inline_response_500'
+      x-openapi-router-controller: swagger_server.controllers.leave_controller
+  /leave/{employeeId}/add:
+    post:
+      tags:
+      - leave
+      summary: Add an Employee's Leave Application
+      operationId: leave_employee_id_add_post
+      parameters:
+      - name: employeeId
+        in: path
+        description: Parameter description in CommonMark or HTML.
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: integer
+          format: int64
+          default: 1
+      - name: id
+        in: query
+        description: Parameter description in CommonMark or HTML.
+        required: true
+        style: form
+        explode: true
+        schema:
+          type: integer
+          format: int64
+          default: 1
+      - name: holiday_status_id
+        in: query
+        description: Parameter description in CommonMark or HTML.
+        required: true
+        style: form
+        explode: true
+        schema:
+          type: integer
+          format: int64
+          default: 1
+      - name: request_date_from
+        in: query
+        description: Parameter description in CommonMark or HTML.
+        required: true
+        style: form
+        explode: true
+        schema:
+          type: integer
+          format: int64
+      - name: request_date_to
+        in: query
+        description: Parameter description in CommonMark or HTML.
+        required: true
+        style: form
+        explode: true
+        schema:
+          type: integer
+          format: int64
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              example:
+                message: Your leave application is created successfully
+                success: true
+                id: 34
+                result:
+                  employee_id: 1
+                  holiday_type: employee
+                  holiday_status_id: 1
+                  request_date_from: 2023-10-04T00:00:00.000Z
+                  request_date_to: 2023-10-07T00:00:00.000Z
+                  request_unit_half: false
+                  name: ""
+                  date_from: 2023-10-04T01:00:00.000Z
+                  date_to: 2023-10-07T10:00:00.000Z
+                  number_of_days: 4
+                  state: confirm
+                  request_date_from_period: am
+        "400":
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/inline_response_400'
+        "500":
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/inline_response_500_1'
+      x-openapi-router-controller: swagger_server.controllers.leave_controller
+  /leave/{employeeId}/update:
+    post:
+      tags:
+      - leave
+      summary: Update an Employee's Leave Application
+      operationId: leave_employee_id_update_post
+      parameters:
+      - name: employeeId
+        in: path
+        description: Parameter description in CommonMark or HTML.
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: integer
+          format: int64
+          default: 1
+      - name: id
+        in: query
+        description: Parameter description in CommonMark or HTML.
+        required: true
+        style: form
+        explode: true
+        schema:
+          type: integer
+          format: int64
+          default: 1
+      - name: holiday_status_id
+        in: query
+        description: Parameter description in CommonMark or HTML.
+        required: true
+        style: form
+        explode: true
+        schema:
+          type: integer
+          format: int64
+          default: 1
+      - name: request_date_from
+        in: query
+        description: Parameter description in CommonMark or HTML.
+        required: true
+        style: form
+        explode: true
+        schema:
+          type: integer
+          format: int64
+      - name: request_date_to
+        in: query
+        description: Parameter description in CommonMark or HTML.
+        required: true
+        style: form
+        explode: true
+        schema:
+          type: integer
+          format: int64
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              example:
+                message: Your leave application has been deleted successfully
+                success: true
+        "400":
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/inline_response_400'
+        "500":
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/inline_response_500_1'
+      x-openapi-router-controller: swagger_server.controllers.leave_controller
+  /leave/{employeeId}/delete:
+    post:
+      tags:
+      - leave
+      summary: Update an Employee's Leave Application
+      operationId: leave_employee_id_delete_post
+      parameters:
+      - name: employeeId
+        in: path
+        description: Parameter description in CommonMark or HTML.
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: integer
+          format: int64
+          default: 1
+      - name: id
+        in: query
+        description: Parameter description in CommonMark or HTML.
+        required: true
+        style: form
+        explode: true
+        schema:
+          type: integer
+          format: int64
+          default: 1
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              example:
+                message: Your leave application is updated successfully
+                success: true
+        "400":
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/inline_response_400_1'
+        "403":
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/inline_response_403'
+        "500":
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/inline_response_500_1'
       x-openapi-router-controller: swagger_server.controllers.leave_controller
   /leave/time/list:
     get:
@@ -118,7 +338,7 @@ paths:
           content:
             application/json:
               example:
-                leave_record:
+                result:
                 - id: 521
                   name: New
                   value: draft
@@ -164,15 +384,6 @@ paths:
           type: integer
           format: int64
           default: 1
-      - name: id
-        in: query
-        required: true
-        style: form
-        explode: true
-        schema:
-          type: integer
-          format: int64
-          default: 1
       responses:
         "200":
           description: OK
@@ -196,7 +407,7 @@ paths:
     get:
       tags:
       - contact
-      summary: Get Remaining Leaves
+      summary: Get Employee Information
       operationId: employee_employee_id_list_get
       parameters:
       - name: employeeId
@@ -215,9 +426,66 @@ paths:
             application/json:
               example:
                 result:
-                  max_leave: 12
-                  used_leave: 2
-                  remaining_leave: 10
+                - id: "1,"
+                  name: "Nguyen Hoang Linh,"
+                  avatar_128: image base 64 link
+                  work_phone: 937739735
+                  mobile_phone: 937739735
+                  department_id:
+                  - 1
+                  - AI & Data Analysis
+                  contract_id:
+                  - 1
+                  - Full-time
+                  parent_id:
+                  - 8
+                  - Tran Trong Minh
+                  address_id:
+                  - 7
+                  - Administrator
+                  work_location_id:
+                  - 1
+                  - "157 Bui Ta Han, Da Nang"
+                  leave_manager_id:
+                  - 2
+                  - Administrator
+                  resource_calendar_id:
+                  - 1
+                  - Standard 40 hours/week
+                  tz: Asia/Bangkok
+                  address_home_id:
+                  - 20
+                  - Nguyen Hoang Linh
+                  private_email: alinh1803@gmail.com
+                  bank_account_id:
+                  - 4
+                  - 400123456778
+                  lang: en_US
+                  km_home_work: 0
+                  emergency_contact: ""
+                  certificate: banchelor
+                  study_field: Computer Science and Engineering
+                  visa_no: 226123456789
+                  visa_expire: 2025-02-28T00:00:00.000Z
+                  work_permit_expiration_date: 2025-05-09T00:00:00.000Z
+                  has_work_permit: file
+                  country_id:
+                  - 241
+                  - Vietnam
+                  identification_id: 201234567
+                  passport_id: 201234567
+                  gender: other
+                  birthday: 2000-03-18T00:00:00.000Z
+                  place_of_birth: Da Nang
+                  country_of_birth:
+                  - 241
+                  - Vietnam
+                  employee_type: employee
+                  user_id:
+                  - 2
+                  - Administrator
+                  x_employee_code: EMP0001
+                  emergency_phone: ""
                 message: This is your remaining leaves
                 success: true
         "500":
@@ -263,8 +531,8 @@ paths:
                   company_id: My Company
                   payslip_count: 3
                 salary:
-                - id: 11
-                  total: 999999999
+                - id: 778
+                  total: 44548500
                 avatar:
                 - id: 1
                   avatar_128: images.jpg
@@ -306,9 +574,9 @@ paths:
                   company_id: My Company
                   contract_id: Full-time
                   note: false
-                  amount: 999999999
-                  total: 999999999
-                  slip_id: Salary Slip of Nguyen Hoang Linh for October-2023
+                  amount: 60000000
+                  total: 60000000
+                  slip_id: Salary Slip of Nguyen Hoang Linh for November-2023
                   salary_rule_id: Basic Salary
                 - name: Gross
                   code: GROSS
@@ -316,20 +584,70 @@ paths:
                   company_id: My Company
                   contract_id: Full-time
                   note: false
-                  amount: 999999999
-                  total: 999999999
-                  slip_id: Salary Slip of Nguyen Hoang Linh for October-2023
+                  amount: 44548500
+                  total: 44548500
+                  slip_id: Salary Slip of Nguyen Hoang Linh for November-2023
                   salary_rule_id: Gross
-                - name: Net Salary
-                  code: NET
+                - name: Medical Allowance
+                  code: Medical
                   quantity: 1
                   company_id: My Company
                   contract_id: Full-time
                   note: false
-                  amount: 999999999
-                  total: 999999999
-                  slip_id: Salary Slip of Nguyen Hoang Linh for October-2023
-                  salary_rule_id: Net Salary
+                  amount: 0
+                  total: 0
+                  slip_id: Salary Slip of Nguyen Hoang Linh for November-2023
+                  salary_rule_id: Medical Allowance
+                - name: Meal Allowance
+                  code: Meal
+                  quantity: 1
+                  company_id: My Company
+                  contract_id: Full-time
+                  note: false
+                  amount: 0
+                  total: 0
+                  slip_id: Salary Slip of Nguyen Hoang Linh for November-2023
+                  salary_rule_id: Meal Allowance
+                - name: Travel Allowance
+                  code: Travel
+                  quantity: 1
+                  company_id: My Company
+                  contract_id: Full-time
+                  note: false
+                  amount: 0
+                  total: 0
+                  slip_id: Salary Slip of Nguyen Hoang Linh for November-2023
+                  salary_rule_id: Travel Allowance
+                - name: Income Tax
+                  code: INC_TAX
+                  quantity: 1
+                  company_id: My Company
+                  contract_id: Full-time
+                  note: false
+                  amount: -9000000
+                  total: -9000000
+                  slip_id: Salary Slip of Nguyen Hoang Linh for November-2023
+                  salary_rule_id: Income Tax
+                - name: Medical Insurrance
+                  code: INS
+                  quantity: 1
+                  company_id: My Company
+                  contract_id: Full-time
+                  note: false
+                  amount: -451500
+                  total: -451500
+                  slip_id: Salary Slip of Nguyen Hoang Linh for November-2023
+                  salary_rule_id: Income Tax
+                - name: Unpaid
+                  code: UNP
+                  quantity: 1
+                  company_id: My Company
+                  contract_id: Full-time
+                  note: false
+                  amount: -6000000
+                  total: -6000000
+                  slip_id: Salary Slip of Nguyen Hoang Linh for November-2023
+                  salary_rule_id: Income Tax
                 message: Payroll List Details runs successfully
                 success: true
         "500":
@@ -424,9 +742,22 @@ paths:
             application/json:
               example:
                 result:
+                - id: 31
+                  check_in: 2023-11-09T14:00:00.000Z
+                  check_out: 2023-11-09T20:00:00.000Z
+                  worked_hours: 6
+                  x_salary: 600000
+                  x_total_salary: "1350000"
+                - id: 28
+                  check_in: 2023-11-08T16:00:00.000Z
+                  check_out: 2023-11-08T23:30:00.000Z
+                  worked_hours: 7.5
+                  x_salary: 750000
+                  x_total_salary: 1350000
+                hourly_cost:
                 - id: 1
-                  worked_hours: 0.004166666666666667
-                  x_total_salary: "41.666666666667"
+                  hourly_cost: 100000
+                total_salary: 1350000
                 success: true
                 message: Your total hour salary runs successfully
         "500":
@@ -452,6 +783,15 @@ paths:
           type: integer
           format: int64
           default: 1
+      - name: id
+        in: query
+        required: true
+        style: form
+        explode: true
+        schema:
+          type: integer
+          format: int64
+          default: 28
       responses:
         "200":
           description: OK
@@ -459,18 +799,19 @@ paths:
             application/json:
               example:
                 result:
-                - id: 3
-                  worked_hours: 0.004166666666666667
-                  x_salary: 41.666666666667
-                  check_in: 2023-11-08 20:41:23
-                  check_out: 2023-11-08 20:42:05
-                - id: 2
-                  worked_hours: 0.013055555555555556
-                  x_salary: 130.55555555556
-                  check_in: 2023-11-08 20:41:23
-                  check_out: 2023-11-08 20:42:05
+                - id: 28
+                  worked_hours: 7.5
+                  x_salary: 750000
+                  check_in: 2023-11-08T16:00:00.000Z
+                  check_out: 2023-11-08T23:30:00.000Z
                 success: true
                 message: Your total hour salary runs successfully
+        "400":
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/inline_response_400_1'
         "500":
           description: Internal Server Error
           content:
@@ -544,7 +885,7 @@ paths:
     get:
       tags:
       - salary
-      summary: Calculate productivity
+      summary: Get Sum Salary based on Productivity
       operationId: productivity_sum_salary_employee_id_list_get
       parameters:
       - name: employeeId
@@ -572,7 +913,7 @@ paths:
                   x_total_projects: 2
                   price_unit: 2000000
                 success: true
-                message: Your sum of productivity salary runs successfully
+                message: Your total productivity runs successfully
         "500":
           description: Internal Server Error
           content:
@@ -580,27 +921,18 @@ paths:
               schema:
                 $ref: '#/components/schemas/inline_response_500_1'
       x-openapi-router-controller: swagger_server.controllers.salary_controller
-  /productivity/detail-salary/{employeeId}/list:
+  /contract/{employeeId}/list:
     get:
       tags:
-      - leave
-      summary: Get Remaining Leaves
-      operationId: productivity_detail_salary_employee_id_list_get
+      - contract
+      summary: Get Sum Salary based on Productivity
+      operationId: contract_employee_id_list_get
       parameters:
       - name: employeeId
         in: path
         required: true
         style: simple
         explode: false
-        schema:
-          type: integer
-          format: int64
-          default: 1
-      - name: id
-        in: query
-        required: true
-        style: form
-        explode: true
         schema:
           type: integer
           format: int64
@@ -612,19 +944,169 @@ paths:
             application/json:
               example:
                 result:
-                - id: 1
-                  x_total_salary: 2000040
-                  x_total_projects: 2
-                  price_unit: 40
+                - name: Full-time
+                  date_start: 2023-10-19T00:00:00.000Z
+                  date_end: 2023-10-19T00:00:00.000Z
+                  resource_calendar_id: Standard 40 hours/week
+                  wage: 60000000
+                  state: open
+                  structure_type_id: Employee
+                  department_id: AI & Data Analysis
+                  job_id: AI Engineer
+                  employee_id: Nguyen Hoang Linh
+                  hr_responsible_id: Administrator
+                  company_id: My Company
                 success: true
-                message: Your detail of productivity salary runs successfully
+                message: Contract List runs successfully
         "500":
           description: Internal Server Error
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/inline_response_500_1'
-      x-openapi-router-controller: swagger_server.controllers.leave_controller
+      x-openapi-router-controller: swagger_server.controllers.contract_controller
+  /check-in/{employeeId}/add:
+    post:
+      tags:
+      - attendance
+      summary: Add an Employee's Check-in
+      operationId: check_in_employee_id_add_post
+      parameters:
+      - name: employeeId
+        in: path
+        description: Parameter description in CommonMark or HTML.
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: integer
+          format: int64
+          default: 1
+      - name: checkin_latitude
+        in: query
+        description: Parameter description in CommonMark or HTML.
+        required: true
+        style: form
+        explode: true
+        schema:
+          type: integer
+          format: float
+      - name: checkin_longitude
+        in: query
+        description: Parameter description in CommonMark or HTML.
+        required: true
+        style: form
+        explode: true
+        schema:
+          type: integer
+          format: float
+      - name: x_img_url_checkin
+        in: query
+        description: Parameter description in CommonMark or HTML.
+        required: true
+        style: form
+        explode: true
+        schema:
+          type: integer
+          format: int64
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              example:
+                message: Your check-in was successful
+                success: true
+                id: 34
+                result:
+                  check_in: 2023-11-10T15:30:57.000Z
+                  checkin_latitude: 16.02834
+                  checkin_longitude: 108.23961
+                  x_img_url_checkin: images/kW3i5kpY4hDVXZaX5YX7ZrMYogDtObUoaSi5zYGE.jpg
+        "400":
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/inline_response_400_2'
+        "500":
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/inline_response_500_1'
+      x-openapi-router-controller: swagger_server.controllers.attendance_controller
+  /check-out/{employeeId}/add:
+    post:
+      tags:
+      - attendance
+      summary: Add an Employee's Check-in
+      operationId: check_out_employee_id_add_post
+      parameters:
+      - name: employeeId
+        in: path
+        description: Parameter description in CommonMark or HTML.
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: integer
+          format: int64
+          default: 1
+      - name: checkout_latitude
+        in: query
+        description: Parameter description in CommonMark or HTML.
+        required: true
+        style: form
+        explode: true
+        schema:
+          type: integer
+          format: float
+      - name: checkout_longitude
+        in: query
+        description: Parameter description in CommonMark or HTML.
+        required: true
+        style: form
+        explode: true
+        schema:
+          type: integer
+          format: float
+      - name: x_img_url_checkout
+        in: query
+        description: Parameter description in CommonMark or HTML.
+        required: true
+        style: form
+        explode: true
+        schema:
+          type: integer
+          format: int64
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              example:
+                message: Your check-out was successful
+                success: true
+                id: 34
+                result:
+                  check_out: 2023-11-10T15:30:57.000Z
+                  checkout_latitude: 16.02834
+                  checkout_longitude: 108.23961
+                  x_img_url_checkout: images/kW3i5kpY4hDVXZaX5YX7ZrMYogDtObUoaSi5zYGE.jpg
+        "400":
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/inline_response_400_3'
+        "500":
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/inline_response_500_1'
+      x-openapi-router-controller: swagger_server.controllers.attendance_controller
 components:
   schemas:
     inline_response_200:
@@ -720,12 +1202,57 @@ components:
         success:
           type: boolean
           default: true
+    inline_response_400:
+      type: object
+      properties:
+        message:
+          type: string
+          default: id/holiday_status_id /request_date_from /request_date_to  is required
+        success:
+          type: boolean
+          default: false
     inline_response_500_1:
       type: object
       properties:
         message:
           type: string
           default: Internal Server Error Message
+        success:
+          type: boolean
+          default: false
+    inline_response_400_1:
+      type: object
+      properties:
+        message:
+          type: string
+          default: id is required
+        success:
+          type: boolean
+          default: false
+    inline_response_403:
+      type: object
+      properties:
+        message:
+          type: string
+          default: You cannot delete a refused/approved leave application
+        success:
+          type: boolean
+          default: false
+    inline_response_400_2:
+      type: object
+      properties:
+        message:
+          type: string
+          default: checkin_latitude/checkin_longitude/x_img_url_checkin is required
+        success:
+          type: boolean
+          default: false
+    inline_response_400_3:
+      type: object
+      properties:
+        message:
+          type: string
+          default: checkout_latitude/checkout_longitude/x_img_url_checkout is required
         success:
           type: boolean
           default: false

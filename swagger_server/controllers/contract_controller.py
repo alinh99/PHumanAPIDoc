@@ -5,8 +5,8 @@ from swagger_server.models.inline_response5001 import InlineResponse5001  # noqa
 from swagger_server import util
 
 
-def employee_employee_id_list_get(employee_id):  # noqa: E501
-    """Get Employee Information
+def contract_employee_id_list_get(employee_id):  # noqa: E501
+    """Get Sum Salary based on Productivity
 
      # noqa: E501
 
